@@ -1,4 +1,4 @@
-# ThreeShift
+# Tic-Tac Strategy
 
 A Persian, right-to-left strategy game based on tic-tac-toe. Each player can
 keep only three marks on the board, so placing a fourth mark removes the oldest
