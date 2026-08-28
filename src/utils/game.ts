@@ -2,6 +2,7 @@ import {
   BOARD_SIZE,
   MAX_MARKS,
   MAX_TURNS,
+  PLAYERS,
   WINNING_LINES,
 } from '../constants/game'
 import type { Cell, GameState, Player } from '../types/game'
@@ -23,6 +24,14 @@ export function isGameDraw(game: GameState): boolean {
 
 export function isGameFinished(game: GameState): boolean {
   return Boolean(game.winner) || isGameDraw(game)
+}
+
+export function getExpiringCells(game: GameState): Set<number> {
+  return new Set(
+    PLAYERS
+      .filter((player) => game.queues[player].length === MAX_MARKS)
+      .map((player) => game.queues[player][0]),
+  )
 }
 
 export function playMove(game: GameState, cell: number): GameState {

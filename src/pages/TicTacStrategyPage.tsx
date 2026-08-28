@@ -3,13 +3,8 @@ import { GamePanel } from "../components/GamePanel";
 import { useTicTacStrategy } from "../hooks/useTicTacStrategy";
 
 export function TicTacStrategyPage() {
-    const {
-    game,
-    isDraw,
-    isFinished,
-    status,
-    restart,
-  } = useTicTacStrategy()
+  const { game, isDraw, isFinished, status, restart, playCell, expiringCells } =
+    useTicTacStrategy();
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#f8fafc] text-slate-900">
@@ -33,10 +28,12 @@ export function TicTacStrategyPage() {
         </div>
 
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px] xl:gap-8">
-           <GamePanel
+          <GamePanel
             game={game}
             isDraw={isDraw}
             isFinished={isFinished}
+            expiringCells={expiringCells}
+            onPlay={playCell}
             status={status}
             onRestart={restart}
           />

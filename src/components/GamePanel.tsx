@@ -1,4 +1,5 @@
 import type { GameState } from "../types/game";
+import { GameBoard } from "./GameBoard";
 import { GameStats } from "./GameStats";
 import { GameStatus } from "./GameStatus";
 
@@ -6,9 +7,11 @@ type GamePanelProps = {
   game: GameState;
   isDraw: boolean;
   isFinished: boolean;
+  expiringCells: Set<number>;
   status: {
     title: string;
   };
+  onPlay: (cell: number) => void;
   onRestart: () => void;
 };
 
@@ -18,17 +21,20 @@ export function GamePanel({
   onRestart,
   isDraw,
   status,
+  expiringCells,
+  onPlay,
 }: GamePanelProps) {
   return (
     <section className="rounded-[2rem] border border-slate-200/80 bg-white p-4 shadow-xl shadow-slate-900/[0.06] sm:p-6 lg:p-8">
       <GameStats game={game} isFinished={isFinished} />
-      <GameStatus
-        game={game}
-        isDraw={isDraw}
-        title={status.title}
-      />
+      <GameStatus game={game} isDraw={isDraw} title={status.title} />
 
-      {/* game board */}
+      <GameBoard
+        game={game}
+        isFinished={isFinished}
+        expiringCells={expiringCells}
+        onPlay={onPlay}
+      />
 
       <div className="mt-6 flex items-center justify-between gap-3 border-t border-slate-100 pt-5">
         {isFinished && (
