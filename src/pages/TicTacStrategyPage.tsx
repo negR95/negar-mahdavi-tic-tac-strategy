@@ -1,10 +1,20 @@
 import { AppHeader } from "../components/AppHeader";
 import { GamePanel } from "../components/GamePanel";
+import { ScoreBoard } from "../components/ScoreBoard";
 import { useTicTacStrategy } from "../hooks/useTicTacStrategy";
 
 export function TicTacStrategyPage() {
-  const { game, isDraw, isFinished, status, restart, playCell, expiringCells } =
-    useTicTacStrategy();
+  const {
+    game,
+    isDraw,
+    isFinished,
+    status,
+    restart,
+    resetMatch,
+    playCell,
+    expiringCells,
+    score,
+  } = useTicTacStrategy();
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#f8fafc] text-slate-900">
@@ -15,15 +25,15 @@ export function TicTacStrategyPage() {
       <div className="relative mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
         <div className="mb-8 max-w-2xl lg:mb-10">
           <div className="mb-3 flex items-center gap-2 text-[11px] font-extrabold text-brand-orange">
-            <span className="h-px w-7 bg-brand-orange" />
+            <span className="h-px w-4 bg-brand-orange" />
             چالش استراتژیک
           </div>
           <h1 className="text-4xl font-black leading-tight text-brand-navy sm:text-5xl">
             سه حرکت جلوتر فکر کن.
           </h1>
           <p className="mt-3 max-w-xl text-sm leading-6 text-slate-500 sm:text-base">
-            فقط سه مهره نگه می‌داری. با گذاشتن مهره چهارم، قدیمی‌ترین مهره‌ات
-            حذف می‌شود؛ پس هر حرکت، بازی را از نو شکل می‌دهد.
+            فقط سه مهره داری. مهره‌ی چهارم که گذاشته بشه، قدیمی‌ترین مهره حذف
+            می‌شه؛ پس هر حرکت، بازی رو تغییر می‌ده.
           </p>
         </div>
 
@@ -37,7 +47,9 @@ export function TicTacStrategyPage() {
             status={status}
             onRestart={restart}
           />
-          <aside>{/* score board */}</aside>
+          <aside>
+            <ScoreBoard score={score} onRestart={resetMatch} />
+          </aside>
         </div>
       </div>
     </main>

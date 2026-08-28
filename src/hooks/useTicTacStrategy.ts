@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MAX_MARKS, MAX_TURNS } from "../constants/game";
-import type { GameState } from "../types/game";
+import type { GameState, MatchScore } from "../types/game";
 import { formatNumber } from "../utils/format";
 import {
   createGame,
@@ -10,8 +10,11 @@ import {
   playMove,
 } from "../utils/game";
 
+const INITIAL_SCORE: MatchScore = { X: 0, O: 0, draws: 0 };
+
 export function useTicTacStrategy() {
   const [game, setGame] = useState<GameState>(createGame);
+  const [score, setScore] = useState<MatchScore>(INITIAL_SCORE);
 
   const isDraw = isGameDraw(game);
   const isFinished = isGameFinished(game);
@@ -22,9 +25,24 @@ export function useTicTacStrategy() {
     if (nextGame === game) return;
 
     setGame(nextGame);
+
+    if (nextGame.winner) {
+      const winner = nextGame.winner;
+      setScore((current) => ({
+        ...current,
+        [winner]: current[winner] + 1,
+      }));
+    } else if (isGameDraw(nextGame)) {
+      setScore((current) => ({ ...current, draws: current.draws + 1 }));
+    }
   };
 
   const restart = () => setGame(createGame());
+
+  const resetMatch = () => {
+    setGame(createGame());
+    setScore(INITIAL_SCORE);
+  };
 
   const status = getGameStatus(game, isDraw);
 
@@ -35,7 +53,9 @@ export function useTicTacStrategy() {
     status,
     playCell,
     restart,
-    expiringCells
+    resetMatch,
+    expiringCells,
+    score,
   };
 }
 

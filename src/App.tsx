@@ -1,8 +1,8 @@
-import './App.css'
-import { TicTacStrategyPage } from './pages/TicTacStrategyPage'
+import "./App.css";
+import { TicTacStrategyPage } from "./pages/TicTacStrategyPage";
 
 function App() {
-  return <TicTacStrategyPage />
+  return <TicTacStrategyPage />;
 }
 
-export default App
+export default App;

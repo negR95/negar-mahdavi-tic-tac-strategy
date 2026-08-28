@@ -1,1 +1,1 @@
-export const formatNumber = (value: number) => value.toLocaleString('fa-IR')
+export const formatNumber = (value: number) => value.toLocaleString("fa-IR");

@@ -1,75 +1,86 @@
-# React + TypeScript + Vite
+# ThreeShift
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Persian, right-to-left strategy game based on tic-tac-toe. Each player can
+keep only three marks on the board, so placing a fourth mark removes the oldest
+one and changes the available winning paths.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Fully Persian interface with native RTL layout
+- Responsive game board for mobile and desktop
+- Oldest-mark indicator before a mark is removed
+- Winning-line highlighting and draw detection
+- Match score that continues across rounds
+- Keyboard-friendly controls and accessible board labels
+- Persian number formatting throughout the interface
 
-## React Compiler
+## Game rules
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Players **X** and **O** take turns choosing an empty cell.
+2. A player can have at most three marks on the board.
+3. Placing a fourth mark removes that player's oldest mark first.
+4. The first player to complete a row, column, or diagonal wins.
+5. The round ends in a draw after 20 moves without a winner.
 
-## Expanding the ESLint configuration
+## Tech stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React 19](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite 8](https://vite.dev/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [tailwind-merge](https://github.com/dcastil/tailwind-merge)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js `20.19+` or `22.12+`
+- [pnpm](https://pnpm.io/)
 
+### Installation
+
+```bash
+git clone <repository-url>
+cd test-vite
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Vite will print the local development URL in the terminal, usually
+`http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Start the development server with hot reload |
+| `pnpm build` | Type-check and create a production build |
+| `pnpm lint` | Check the codebase with ESLint |
+| `pnpm preview` | Preview the production build locally |
 
+## Project structure
+
+```text
+src/
+├── components/   # Reusable interface and game components
+├── constants/    # Board configuration and game limits
+├── hooks/        # React game-state management
+├── pages/        # Page-level composition
+├── types/        # Shared TypeScript domain types
+├── utils/        # Pure game rules and formatting helpers
+├── App.tsx       # Application root
+├── App.css       # Small global interaction styles
+├── index.css     # Tailwind theme and global RTL styles
+└── main.tsx      # React entry point
 ```
+
+## Implementation notes
+
+The game rules are implemented as pure functions in `src/utils/game.ts`, while
+`src/hooks/useTicTacStrategy.ts` connects those rules to React state. UI
+components receive state through props and do not contain game transitions.
+Conditional Tailwind classes are resolved directly with `tailwind-merge`.
+
+The document language and direction are defined at the HTML level with
+`lang="fa"` and `dir="rtl"`, allowing browsers and assistive technologies to
+handle the Persian interface correctly.
