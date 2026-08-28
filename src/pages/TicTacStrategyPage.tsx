@@ -1,6 +1,16 @@
 import { AppHeader } from "../components/AppHeader";
+import { GamePanel } from "../components/GamePanel";
+import { useTicTacStrategy } from "../hooks/useTicTacStrategy";
 
 export function TicTacStrategyPage() {
+    const {
+    game,
+    isDraw,
+    isFinished,
+    status,
+    restart,
+  } = useTicTacStrategy()
+
   return (
     <main className="min-h-screen overflow-hidden bg-[#f8fafc] text-slate-900">
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(248,101,46,0.08),transparent_28%),radial-gradient(circle_at_85%_90%,rgba(29,78,102,0.08),transparent_30%)]" />
@@ -23,7 +33,13 @@ export function TicTacStrategyPage() {
         </div>
 
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_340px] xl:gap-8">
-          {/* game panel */}
+           <GamePanel
+            game={game}
+            isDraw={isDraw}
+            isFinished={isFinished}
+            status={status}
+            onRestart={restart}
+          />
           <aside>{/* score board */}</aside>
         </div>
       </div>
